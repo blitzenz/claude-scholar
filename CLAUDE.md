@@ -84,124 +84,175 @@
 
 Expanded from 7 to 12 stages, incorporating multi-perspective debate, pilot validation, visual planning, and quality gate mechanisms (inspired by Sibyl Research System's dual-loop architecture).
 
+**Workflow order follows Sibyl's literature-first principle**: read the field before forming opinions, so ideas are grounded in real gaps rather than imagined ones.
+
 ```
-1. Topic Scoping
-   → 2. Literature Search & Zotero Import
-   → 3. Multi-Perspective Idea Debate
-   → 4. Research Design & Planning
-   → 5. Pilot Validation (small sample)
-   → 6. Full Data Collection & LLM Processing
-   → 7. Empirical Analysis & Robustness
-   → 8. Result Assessment (multi-angle)
-   → 9. Visual Planning & Paper Outline
-   → 10. Paper Writing (parallel sections)
-   → 11. Quality Gate & Self-Review
-   → 12. Submission / Rebuttal / Post-Acceptance
+Phase I — Ideation
+  1. Literature Survey & Zotero Import
+     → 2. Research Question & Gap Crystallization
+     → 3. Multi-Perspective Idea Stress-Test
+
+Phase II — Design & Validation
+     → 4. Research Design & Pre-Analysis Plan
+     → 5. Pilot Study (GO / NO-GO gate)
+
+Phase III — Execution
+     → 6. Data Assembly & LLM Processing
+     → 7. Empirical Analysis & Robustness
+
+Phase IV — Writing & Publication
+     → 8. Result Interpretation (multi-angle)
+     → 9. Paper Outline & Visual Plan
+     → 10. Paper Writing (section by section)
+     → 11. Quality Gate & Revision
+     → 12. Submission → Review → Acceptance
 ```
 
 ### Stage Details
 
-**Stage 1: Topic Scoping**
-- 5W1H framework: What phenomenon? Why important? Who are stakeholders? When (time scope)? Where (geography/industry)? How (preliminary method)?
-- User provides a rough direction; Claude structures it into a researchable question
-- Output: `plan/topic-scoping.md`
+---
 
-**Stage 2: Literature Search & Zotero Import**
-- WebSearch across Google Scholar, SSRN, OpenAlex for ABS 3★+ papers
-- Extract DOIs → batch import to Zotero via API → auto-create themed collections (Core Papers / Methods / Applications / To-Read)
-- Attach Open Access PDFs via Unpaywall; record paywalled papers for user to download via school access
-- Full-text analysis for core papers; extract: research question, method, data, findings, limitations
-- Gap analysis: identify 2-3 concrete research opportunities
+#### Phase I — Ideation
+
+**Stage 1: Literature Survey & Zotero Import**
+> *Entry: a rough topic area or research interest. Exit: documented field landscape + 2-3 identified gaps.*
+- Search Google Scholar, SSRN, OpenAlex for ABS 3★+ papers on the topic; cast wide first, then refine
+- Extract DOIs → batch import to Zotero via MCP → auto-create collections: `Core Papers / Methods / Applications / To-Read`
+- Attach Open Access PDFs via Unpaywall; log paywalled papers for user to retrieve via school library (Chrome)
+- Full-text analysis of 10-20 core papers: extract RQ, theory, method, data, key findings, limitations
+- **Gap Analysis**: synthesize into 2-3 concrete, actionable research opportunities with justification
 - Output: `context/literature-review.md`, `context/gap-analysis.md`, `references.bib`
 
-**Stage 3: Multi-Perspective Idea Debate** *(from Sibyl)*
-- Evaluate the proposed idea from 4 perspectives (adapted from Sibyl's 6-agent debate for business research):
-  - **Innovator**: What's novel about this? Cross-domain analogies? New measurement approaches?
-  - **Skeptic**: What could go wrong? Endogeneity concerns? Data limitations? Identification challenges?
-  - **Pragmatist**: Is this feasible with available data/methods? Timeline realistic? Sample size sufficient?
-  - **Theorist**: What's the theoretical mechanism? Which theory anchors this? Are hypotheses well-grounded?
-- Synthesize perspectives into a refined proposal with clear contribution statement
-- Output: `idea/perspectives/`, `idea/proposal.md`, `idea/hypotheses.md`
+**Stage 2: Research Question & Gap Crystallization**
+> *Entry: gap-analysis.md. Exit: one confirmed RQ that user has approved and Claude has stress-tested.*
+- Use 5W1H framework to convert the most promising gap into a precise research question:
+  - **What** phenomenon / outcome? **Why** does it matter (theory + practice)? **Who** are the stakeholders?
+  - **When** (time window)? **Where** (country / industry / firm type)? **How** (preliminary method)?
+- Check: Does this RQ address a gap in Stage 1, rather than replicating existing work?
+- Claude stress-tests the RQ against the literature: alternative explanations pre-empted? identification strategy plausible?
+- User confirms direction before proceeding
+- Output: `plan/research-question.md`
 
-**Stage 4: Research Design & Planning**
-- Define variables: dependent, independent, controls (with sources: WRDS, CSMAR, Bloomberg, etc.)
-- Specify empirical model (OLS, panel FE, DiD, IV, PSM)
-- Plan endogeneity strategy
-- If using LLM for text analysis: design prompt, plan human validation (Cohen's kappa target ≥ 0.7)
-- Plan all tables and figures upfront (regression tables, descriptive stats, robustness checks, mechanism tests)
-- Output: `plan/methodology.md`, `plan/variable-definitions.md`, `plan/visual-plan.md`
+**Stage 3: Multi-Perspective Idea Stress-Test** *(from Sibyl)*
+> *Entry: confirmed RQ. Exit: refined proposal with hypotheses + documented reservations.*
+- Evaluate the idea from 4 adversarial perspectives:
+  - **Innovator**: What is genuinely novel? Cross-domain analogies? New measurement approaches?
+  - **Skeptic**: Endogeneity threats? Data feasibility? Publication risk? Alternative explanations?
+  - **Pragmatist**: Can we actually get the data? Is the timeline realistic? Is the sample large enough?
+  - **Theorist**: What is the causal mechanism? Which theory anchors this? Are the hypotheses falsifiable?
+- Synthesize into a refined proposal with a crisp contribution statement (1 paragraph)
+- Lock in 2-3 testable hypotheses before moving to design
+- Output: `idea/stress-test.md`, `idea/proposal.md`, `idea/hypotheses.md`
 
-**Stage 5: Pilot Validation** *(from Sibyl)*
-- Before full-scale analysis, test on a small sample (~100-500 firms, 1-2 years):
-  - Does the LLM prompt produce sensible ESG scores/classifications?
-  - Does the main regression show the expected sign?
-  - Are there obvious data quality issues?
-- GO/NO-GO decision: if pilot shows promise → proceed; if not → revise approach or pivot
-- Output: `exp/pilot-results.md`
+---
 
-**Stage 6: Full Data Collection & LLM Processing**
-- Run LLM pipeline on full dataset (batch processing with error handling)
-- Record all prompts in appendix-ready format
-- Validate LLM outputs: inter-coder reliability, prompt sensitivity analysis, model robustness (GPT-4 vs Claude)
-- Output: processed dataset, `data/llm-validation.md`
+#### Phase II — Design & Validation
+
+**Stage 4: Research Design & Pre-Analysis Plan**
+> *Entry: approved hypotheses. Exit: fully specified empirical plan registered before touching data.*
+- Define all variables: dependent, independent, controls — with data sources (WRDS, CSMAR, Bloomberg ESG, Refinitiv, etc.)
+- Specify empirical model: OLS / panel FE / DiD / IV / PSM; justify choice
+- Endogeneity strategy: instrument candidates, parallel-trends test plan, Oster (2019) coefficient stability
+- If LLM text analysis: draft prompt, specify human validation protocol (target Cohen's kappa ≥ 0.7, n ≥ 200 hand-labeled)
+- Pre-specify all planned robustness checks and mechanism tests (prevents HARKing)
+- Output: `plan/methodology.md`, `plan/variable-definitions.md`, `plan/preanalysis-plan.md`
+
+**Stage 5: Pilot Study** *(GO / NO-GO gate)*
+> *Entry: pre-analysis plan. Exit: GO decision with evidence, or PIVOT back to Stage 3.*
+- Sample: ~100-500 firms, 1-3 years; collect pilot data and run pipeline end-to-end
+- Checklist:
+  - [ ] LLM prompt produces internally consistent outputs across diverse cases?
+  - [ ] Main coefficient has expected sign and is at least marginally significant?
+  - [ ] No obvious data quality issues (survivorship bias, unit mismatch, missing >30%)?
+  - [ ] Cohen's kappa ≥ 0.7 on hand-labeled validation set?
+- **GO**: all boxes checked → proceed to full data collection
+- **NO-GO**: fail any box → diagnose root cause → revise prompt / RQ / method → re-pilot
+- Output: `exp/pilot-results.md` (include pilot regression table)
+
+---
+
+#### Phase III — Execution
+
+**Stage 6: Data Assembly & LLM Processing**
+> *Entry: GO from pilot. Exit: clean, analysis-ready panel dataset.*
+- **Structured data**: download financial/governance variables from WRDS, CSMAR, Bloomberg, Refinitiv; merge on firm-year identifiers; handle currency, fiscal-year, and exchange adjustments
+- **Text data**: collect CSR reports / earnings calls / proxy statements; run LLM pipeline with batch processing and error handling
+- Validate LLM outputs: inter-coder reliability on 10% holdout, prompt sensitivity (paraphrase test), model robustness (GPT-4o vs Claude cross-check)
+- Document all prompts in appendix-ready format (exact wording, model, temperature, date)
+- Winsorize continuous variables at 1%/99%; construct final panel; export to `data/final_panel.csv`
+- Output: `data/final_panel.csv`, `data/data-construction.md`, `data/llm-validation.md`
 
 **Stage 7: Empirical Analysis & Robustness**
-- Main regression with clustered standard errors
-- At least 3 robustness checks: alternative variable definitions, sub-samples, alternative estimators
-- Endogeneity tests: IV regression / DiD / PSM / Oster (2019) coefficient stability
-- Mechanism tests (mediation analysis)
-- Cross-sectional heterogeneity analysis
-- Economic magnitude discussion
-- Output: `exp/results/`, regression tables, figures
+> *Entry: final_panel.csv + pre-analysis plan. Exit: complete set of tables and figures.*
+- Follow the pre-analysis plan strictly; any deviation must be documented and justified
+- **Main results**: OLS / panel FE with two-way fixed effects; standard errors clustered by firm (and year if T > 20)
+- **Robustness checks** (minimum 3): alternative variable definitions, sub-sample splits, alternative estimators (Poisson, logit, Fama-MacBeth)
+- **Endogeneity**: IV regression, DiD parallel-trends, PSM matched-sample, or Oster δ; report at least one
+- **Mechanism tests**: mediation / moderation analysis for the theoretical channel
+- **Heterogeneity**: cross-sectional splits by size, industry, country, governance quality
+- **Economic magnitude**: translate coefficients into real-world units (% change, dollar value)
+- Output: `exp/results/` (all tables as .csv + LaTeX), `exp/figures/`
 
-**Stage 8: Result Assessment (Multi-Angle)** *(from Sibyl)*
-- Assess results from multiple perspectives before writing:
-  - **Optimist**: What are the strengths? What extensions are possible?
-  - **Skeptic**: Are there statistical concerns? Missing robustness checks? Alternative explanations?
-  - **Strategist**: Which results go in the main paper vs appendix? What's the narrative?
-- PROCEED (write paper) or PIVOT (try alternative approach from Stage 3 alternatives)
+---
+
+#### Phase IV — Writing & Publication
+
+**Stage 8: Result Interpretation (Multi-Angle)**
+> *Entry: completed results tables. Exit: clear narrative strategy + decision to write or pivot.*
+- Assess results from 3 perspectives before writing a single word:
+  - **Optimist**: Which findings are strongest? What are the theoretical and practical implications?
+  - **Skeptic**: Which results are fragile? Missing robustness tests? Remaining identification concerns?
+  - **Strategist**: Main paper vs online appendix split? What is the core narrative thread?
+- **PROCEED**: results are coherent, main finding survives robustness → write paper
+- **PIVOT**: null result or reversed sign → return to Stage 3, select alternative hypothesis
 - Output: `idea/result-assessment.md`
 
-**Stage 9: Visual Planning & Paper Outline** *(from Sibyl)*
-- Design paper outline with **explicit Figure & Table Plan** before writing any section:
-  - Table 1: Descriptive statistics
-  - Table 2: Main regression results
-  - Table 3-5: Robustness checks
-  - Table 6: Mechanism tests
-  - Figure 1: Research framework diagram
-  - Figure 2: Key trend visualization
-- Each visual element has: description, data source, generation method, target section
-- Output: `writing/outline.md` (with visual plan), `writing/figures/`
+**Stage 9: Paper Outline & Visual Plan**
+> *Entry: result-assessment.md. Exit: locked outline with every table/figure assigned before writing.*
+- Draft full section outline (1 paragraph per section summarizing argument)
+- **Mandatory visual plan** — assign each table/figure before writing:
+  - Table 1: Summary statistics (full sample + split by key variable)
+  - Table 2: Main regression (baseline + FE variants)
+  - Table 3: Robustness checks (battery format)
+  - Table 4: Endogeneity test (IV / DiD / PSM)
+  - Table 5: Mechanism test
+  - Table 6: Heterogeneity analysis
+  - Figure 1: Research framework / conceptual model
+  - Figure 2: Key trend or event-study plot
+- Each visual: description, data source, generation method, target section, caption draft
+- Output: `writing/outline.md` (with visual plan embedded)
 
-**Stage 10: Paper Writing (Parallel Sections)**
-- Write sections referencing the outline and visual plan:
-  - Introduction (hook → RQ → what we do → findings → contributions)
-  - Literature Review & Hypotheses (theory → 3 streams → hypotheses)
-  - Data & Methodology (data sources → sample → LLM method → variables → model)
-  - Results (main → robustness → endogeneity → mechanisms → heterogeneity)
-  - Conclusion (summary → implications → limitations → future)
-- Each section cross-references planned figures/tables
+**Stage 10: Paper Writing**
+> *Entry: locked outline. Each section is written in sequence, cross-referencing the visual plan.*
+- **Introduction**: hook (phenomenon + puzzle) → gap → what we do → main findings → contributions (3 bullets) → roadmap
+- **Literature & Hypotheses**: anchor theory → 3 literature streams → hypotheses derived from gaps, not cherry-picked support
+- **Data & Methodology**: data sources → sample construction (obs count at each filter step) → LLM method + validation → variable definitions → model specification
+- **Results**: main table → robustness → endogeneity → mechanisms → heterogeneity; each sub-section starts with one-sentence finding
+- **Conclusion**: summary → theoretical contribution → managerial/policy implication → limitations → future research
+- Anti-AI pass after each section: remove "it is important to note", "delve into", "furthermore", "robust", "nuanced", "leverage", "underscore"
 - Output: `writing/sections/`, `writing/paper.md`
 
-**Stage 11: Quality Gate & Self-Review** *(from Sibyl)*
-- Score the paper on 6 dimensions (1-10 each):
-  1. **Contribution clarity**: Is the "so what" compelling?
-  2. **Empirical rigor**: Endogeneity addressed? Robustness sufficient?
-  3. **LLM methodology**: Validated against human coders? Prompt disclosed?
-  4. **Writing quality**: Clear, concise, logical flow?
-  5. **Journal fit**: Matches target journal norms and recent publications?
-  6. **Citation completeness**: All claims supported? Key papers cited?
-- If average < 7/10 → identify weakest dimension → iterate on that section
-- If average ≥ 7/10 → ready for submission
-- Anti-AI check: remove AI writing patterns (e.g., "it's important to note", "delve into")
-- Output: `writing/quality-review.md`, `writing/improvement-plan.md`
+**Stage 11: Quality Gate & Revision** *(from Sibyl)*
+> *Entry: complete draft. Exit: submission-ready manuscript (score ≥ 7/10 on all dimensions).*
+- Score on 6 dimensions (1-10):
+  1. **Contribution clarity**: Is the "so what" compelling to a non-specialist referee?
+  2. **Empirical rigor**: Endogeneity credibly addressed? ≥3 robustness checks passed?
+  3. **LLM methodology**: Validation reported? Prompt disclosed in appendix? Sensitivity tested?
+  4. **Writing quality**: Clear, concise, no AI patterns, flows like a native speaker?
+  5. **Journal fit**: Matches recent publications in target journal? Correct citation style?
+  6. **Citation completeness**: Every empirical claim cited? No missing core papers?
+- Any dimension < 7 → targeted revision of that section → re-score
+- Final anti-AI sweep on full paper
+- Output: `writing/quality-review.md`, `writing/paper-final.md`
 
-**Stage 12: Submission / Rebuttal / Post-Acceptance**
-- Format paper for target journal (LaTeX or Word template)
-- Generate cover letter
-- After reviews: systematic rebuttal writing (point-by-point response with evidence)
-- After acceptance: presentation slides, poster, promotion content
-- Output: final submission package
+**Stage 12: Submission → Review → Acceptance**
+> *Entry: paper-final.md. Covers the full publication cycle.*
+- **Submission**: format for target journal (LaTeX / Word template); write cover letter (contribution + fit + no conflicts)
+- **Desk rejection contingency**: if rejected without review, diagnose (fit? contribution framing?) → retarget next journal
+- **Revise & Resubmit**: systematic point-by-point rebuttal (Reviewer 1 / Reviewer 2 / AE); each point = acknowledge + respond + cite evidence + show change
+- **Post-acceptance**: camera-ready formatting, data availability statement, replication package (`code/` + `data/README`)
+- **Dissemination**: conference slides, 1-page policy brief, Twitter/LinkedIn thread, SSRN posting
+- Output: submission package, `rebuttal/response-to-reviewers.md`, `dissemination/`
 
 ### Zotero Integration
 
