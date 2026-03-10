@@ -11,12 +11,15 @@
 ## User Background
 
 ### Academic Background
-- **Field**: Business School — ESG (Environmental, Social, Governance) Research
-- **Approach**: Using Large Language Models (LLMs) as primary research tools, not developing LLMs
-- **Target Venues**:
-  - Top business/finance/management journals: Journal of Finance, Review of Financial Studies, Journal of Financial Economics, Management Science, Strategic Management Journal, Academy of Management Journal, Journal of Business Ethics, Business Strategy and the Environment, Journal of Accounting and Economics
-  - High-impact interdisciplinary journals: Nature, Science, PNAS
-  - ESG/sustainability-focused outlets: Journal of Sustainable Finance, Corporate Social Responsibility and Environmental Management, Ecological Economics
+- **Degree**: Business School PhD candidate — ESG (Environmental, Social, Governance) Research
+- **Approach**: Using Large Language Models (LLMs) as primary research tools, NOT developing LLMs
+- **Target Venues (Journal Quality Filter)**:
+  - **ABS/AJG 4* / 4**: Journal of Finance, Review of Financial Studies, Journal of Financial Economics, Management Science, Strategic Management Journal, Academy of Management Journal, American Economic Review, Quarterly Journal of Economics, Journal of Political Economy, Administrative Science Quarterly, Journal of Consumer Research, MIS Quarterly
+  - **ABS/AJG 3**: Journal of Business Ethics, Business Strategy and the Environment, Journal of Accounting and Economics, Journal of Management Studies, Journal of International Business Studies, Ecological Economics, Corporate Social Responsibility and Environmental Management
+  - **FT50** (all FT50 journals are ABS 3* or above, safe to use as equivalent filter): includes AMJ, MS, SMJ, JF, RFS, ASQ, etc.
+  - **UTD24** (also broadly equivalent to ABS 3+): includes MS, SMJ, AMJ, JFE, etc.
+  - **High-quality SSRN working papers**: Accept if from ABS 4*/4 journal authors, top-20 university affiliations (Harvard, MIT, Stanford, Chicago, Wharton, LSE, etc.), or already cited 50+ times
+  - **Interdisciplinary**: Nature, Science, PNAS, Nature Sustainability, Nature Climate Change
 - **Focus**: Empirical research using LLMs for text analysis, classification, scoring, and measurement; academic writing quality, logical coherence, natural expression
 
 ### Research Specialization
@@ -104,24 +107,49 @@ Ideation → Data Collection & LLM Processing → Empirical Analysis → Paper W
 
 ## Skills Directory
 
-### 🔬 Research & Analysis
+### 🔬 Research Ideation & Literature
 
 - **research-ideation**: Research startup (5W1H, literature review, gap analysis, research question formulation, Zotero integration)
-- **results-analysis**: Empirical analysis results (regression tables, significance tests, robustness checks, visualization)
-- **citation-verification**: Citation verification (multi-layer: format→API→info→content)
+- **literature-review** *(K-Dense)*: Systematic literature review across PubMed, Google Scholar, Semantic Scholar; PRISMA flow diagrams; citation verification
+- **research-lookup** *(K-Dense)*: Deep research synthesis on any topic with citations
+- **openalex-database** *(K-Dense)*: Query 240M+ scholarly works; bibliometric analysis; citation tracking; identify influential papers
+- **hypothesis-generation** *(K-Dense)*: Formulate testable hypotheses from observations; experimental design
+- **scientific-brainstorming** *(K-Dense)*: Creative ideation, interdisciplinary connections, assumption reversal
+- **scientific-critical-thinking** *(K-Dense)*: Methodology critique, bias detection, evidence quality grading (GRADE, Cochrane ROB)
 - **daily-paper-generator**: Daily paper generator for ESG/finance/management research tracking
 
 ### 📝 Paper Writing & Publication
 
-- **esg-paper-writing**: ESG/business/finance paper writing assistance
-  - Target journals: Journal of Finance, Management Science, Strategic Management Journal, Journal of Business Ethics, Business Strategy and the Environment
-  - Empirical business writing conventions, APA/AMA/Chicago style
+- **esg-paper-writing**: ESG/business/finance paper writing (JF, MS, SMJ, JBE, BSE; APA/AMA/Chicago; regression tables; LLM validation templates)
+- **scientific-writing** *(K-Dense)*: IMRAD structure, section-specific writing strategies, reporting guidelines (STROBE, PRISMA)
 - **writing-anti-ai**: Remove AI writing patterns, bilingual (Chinese/English)
 - **paper-self-review**: Paper self-review (6-item quality checklist)
+- **peer-review** *(K-Dense)*: Peer review writing, manuscript evaluation, reviewer feedback
 - **review-response**: Systematic rebuttal writing
 - **post-acceptance**: Post-acceptance processing (presentation, poster, promotion)
 - **doc-coauthoring**: Document co-authoring workflow
+- **citation-management** *(K-Dense)*: Citation formatting, reference management across APA/Chicago/AMA styles
+- **citation-verification**: Citation verification (multi-layer: format→API→info→content)
+- **research-grants** *(K-Dense)*: Grant writing (NSFC, NSF, NIH styles); budget preparation; broader impacts
 - **latex-conference-template-organizer**: LaTeX template organization
+
+### 📊 Data & Empirical Analysis
+
+- **results-analysis**: Empirical analysis (OLS, panel FE, DiD, event study, IV, PSM; regression tables with clustered SE; robustness checks; LLM output validation)
+- **statistical-analysis** *(K-Dense)*: Hypothesis testing, assumption checking, effect sizes, power analysis, APA-format reporting, Bayesian methods
+- **exploratory-data-analysis** *(K-Dense)*: Auto-detect 200+ file formats; data quality assessment; preprocessing recommendations
+- **market-research-reports** *(K-Dense)*: 50+ page consulting-quality reports; Porter's Five Forces, PESTLE, SWOT, BCG; market sizing
+- **edgartools** *(K-Dense)*: SEC filings analysis (10-K, 10-Q, 8-K); ESG disclosure extraction from regulatory filings
+- **fred-economic-data** *(K-Dense)*: 800,000+ economic time series; macroeconomic context for ESG research
+
+### 🎨 Visualization & Presentation
+
+- **scientific-visualization** *(K-Dense)*: Publication-quality figures; colorblind-friendly palettes; vector formats
+- **scientific-schematics** *(K-Dense)*: AI-generated research diagrams and flowcharts
+- **matplotlib** *(K-Dense)*: Python matplotlib for publication-quality charts
+- **scientific-slides** *(K-Dense)*: Academic presentation slides
+- **markdown-mermaid-writing** *(K-Dense)*: Text-based diagrams (flowcharts, mindmaps, Gantt charts)
+- **generate-image** *(K-Dense)*: AI image generation for research illustrations
 
 ### 💻 Development Workflows
 
@@ -138,8 +166,6 @@ Ideation → Data Collection & LLM Processing → Empirical Analysis → Paper W
 - **skill-improver**: Skill improvement tool
 - **skill-quality-reviewer**: Skill quality review
 - **command-development**: Slash command development
-- **command-name**: Plugin structure guide
-- **agent-identifier**: Agent development configuration
 - **hook-development**: Hook development and event handling
 - **mcp-integration**: MCP server integration
 
@@ -147,7 +173,10 @@ Ideation → Data Collection & LLM Processing → Empirical Analysis → Paper W
 
 - **planning-with-files**: Planning and progress tracking with Markdown files
 - **uv-package-manager**: uv package manager usage
-- **webapp-testing**: Local web application testing
+- **pdf** *(K-Dense)*: PDF processing (extract, merge, split, OCR)
+- **docx** *(K-Dense)*: Word document processing
+- **pptx** *(K-Dense)*: PowerPoint processing
+- **xlsx** *(K-Dense)*: Excel/spreadsheet processing
 
 ### 🎨 Web Design
 
