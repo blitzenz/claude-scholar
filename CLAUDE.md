@@ -82,6 +82,7 @@ Ideation → ML Development → Experiment Analysis → Paper Writing → Self-R
 
 - **Automation**: 5 Hooks auto-trigger at session lifecycle stages (skill evaluation, env init, work summary, security check)
 - **Zotero Integration**: Automated paper import, collection management, full-text reading, and citation export via Zotero MCP
+- **Obsidian Integration**: Zotero-like literature workflows for users who keep papers/reading notes in an Obsidian vault (folder/tag → batch reading → structured notes → synthesis) via Obsidian MCP
 - **Knowledge Extraction**: `paper-miner` and `kaggle-miner` agents continuously extract knowledge from papers and competitions
 - **Skill Evolution**: `skill-development` → `skill-quality-reviewer` → `skill-improver` three-step improvement loop
 
@@ -152,6 +153,9 @@ Ideation → ML Development → Experiment Analysis → Paper Writing → Self-R
 | `/research-init` | Start Zotero-integrated research ideation workflow (auto-create collections, import papers, full-text analysis) |
 | `/zotero-review` | Read papers from Zotero collection, generate structured literature review |
 | `/zotero-notes` | Batch read Zotero papers, generate structured reading notes |
+| `/obsidian-init` | Initialize Obsidian research folder structure (Zotero-like) for a topic |
+| `/obsidian-review` | Read paper notes from an Obsidian folder/tag, generate structured literature review |
+| `/obsidian-notes` | Batch read Obsidian paper notes, generate structured reading notes |
 | `/analyze-results` | Analyze experiment results (statistical tests, visualization, ablation) |
 | `/rebuttal` | Generate systematic rebuttal document |
 | `/presentation` | Create conference presentation outline |
@@ -211,11 +215,12 @@ Ideation → ML Development → Experiment Analysis → Paper Writing → Self-R
 
 ---
 
-## Agents (14 Agents)
+## Agents (15 Agents)
 
 ### Research Workflow Agents
 
 - **literature-reviewer** - Literature search, classification, and trend analysis (Zotero MCP integration: auto-import, full-text reading)
+- **literature-reviewer-obsidian** - Literature review from Obsidian vault (folder/tag based), structured notes + synthesis (Obsidian MCP)
 - **data-analyst** - Automated data analysis and visualization
 - **rebuttal-writer** - Systematic rebuttal writing with tone optimization
 - **paper-miner** - Extract writing knowledge from successful papers

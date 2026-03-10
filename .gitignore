@@ -10,6 +10,7 @@ Thumbs.db
 settings*.json
 settings*.json.bak
 *.backup
+.mcp.json
 
 # History and session data
 history.jsonl

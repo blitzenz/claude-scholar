@@ -299,6 +299,9 @@ claude-scholar/
 │
 ├── commands/            # 50+ slash commands (quick workflow execution)
 │   ├── research-init.md         # Launch research startup workflow
+│   ├── obsidian-init.md         # Initialize Obsidian research folder structure
+│   ├── obsidian-review.md       # Read Obsidian paper notes, generate literature review
+│   ├── obsidian-notes.md        # Batch read Obsidian paper notes, generate reading notes
 │   ├── zotero-review.md         # Read Zotero papers, generate literature review
 │   ├── zotero-notes.md          # Batch read Zotero papers, generate reading notes
 │   ├── analyze-results.md       # Analyze experiment results
@@ -326,8 +329,9 @@ claude-scholar/
 │       ├── sc-improve.md         # Code improvement
 │       └── ...
 │
-├── agents/              # 14 specialized agents (focused task delegation)
+├── agents/              # 15 specialized agents (focused task delegation)
 │   ├── literature-reviewer.md   # Literature search and trend analysis
+│   ├── literature-reviewer-obsidian.md  # Literature review from Obsidian vault
 │   ├── data-analyst.md          # Automated data analysis and visualization
 │   ├── rebuttal-writer.md       # Systematic rebuttal writing
 │   ├── paper-miner.md           # Extract paper knowledge: structure, techniques
@@ -537,10 +541,15 @@ cp rules/agents.md ~/.claude/rules/
 - Node.js (required for hooks)
 - uv, Python (for Python development)
 - **Zotero** (for Zotero MCP features)
+- **Obsidian** (optional, for Obsidian MCP features)
 
 ### MCP Setup
 
-For Zotero-integrated research workflows, install the MCP server:
+See [MCP_SETUP.md](./MCP_SETUP.md) for the full setup guide and troubleshooting.
+
+#### Zotero MCP (Zotero-integrated workflows)
+
+Install the MCP server:
 
 ```bash
 # Install from Galaxy-Dawn fork (Web API mode)
@@ -567,7 +576,13 @@ Then add to your `~/.claude/settings.json`:
 }
 ```
 
-See [MCP_SETUP.md](./MCP_SETUP.md) for detailed setup guide and troubleshooting.
+#### Obsidian MCP (Obsidian vault workflows)
+
+If your paper library lives in an Obsidian vault, configure Obsidian MCP and use:
+
+- `/obsidian-init`
+- `/obsidian-review`
+- `/obsidian-notes`
 
 ### First Run
 
