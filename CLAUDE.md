@@ -11,24 +11,39 @@
 ## User Background
 
 ### Academic Background
-- **Degree**: Computer Science PhD
+- **Field**: Business School — ESG (Environmental, Social, Governance) Research
+- **Approach**: Using Large Language Models (LLMs) as primary research tools, not developing LLMs
 - **Target Venues**:
-  - Top conferences: NeurIPS, ICML, ICLR, KDD
-  - High-impact journals: Nature, Science, Cell, PNAS
-- **Focus**: Academic writing quality, logical coherence, natural expression
+  - Top business/finance/management journals: Journal of Finance, Review of Financial Studies, Journal of Financial Economics, Management Science, Strategic Management Journal, Academy of Management Journal, Journal of Business Ethics, Business Strategy and the Environment, Journal of Accounting and Economics
+  - High-impact interdisciplinary journals: Nature, Science, PNAS
+  - ESG/sustainability-focused outlets: Journal of Sustainable Finance, Corporate Social Responsibility and Environmental Management, Ecological Economics
+- **Focus**: Empirical research using LLMs for text analysis, classification, scoring, and measurement; academic writing quality, logical coherence, natural expression
+
+### Research Specialization
+- **ESG Topics**: Corporate sustainability disclosure, ESG scoring, greenwashing detection, climate-related financial risk, social responsibility reporting, board governance, stakeholder engagement, corporate governance
+- **LLM Applications in ESG Research**:
+  - NLP-based ESG text analysis (annual reports, CSR reports, earnings calls, proxy statements)
+  - Automated ESG scoring and classification with LLMs
+  - Sentiment and tone analysis of sustainability disclosures
+  - Greenwashing detection using language models
+  - Cross-country ESG comparison via multilingual LLMs
+  - Information extraction from unstructured ESG documents
+- **Empirical Methods**: Panel data regression, event studies, difference-in-differences, text-as-data approaches, propensity score matching
+- **Data Sources**: Bloomberg ESG, MSCI ESG, Refinitiv/LSEG, WRDS, CSMAR, Wind, corporate sustainability reports, SEC EDGAR, Web of Science
 
 ### Tech Stack Preferences
 
 **Python Ecosystem**:
 - **Package manager**: `uv` - modern Python package manager
-- **Config management**: Hydra + OmegaConf (config composition, overrides, type safety)
-- **Model training**: Transformers Trainer
+- **Data analysis**: pandas, numpy, statsmodels, linearmodels
+- **NLP/LLM**: transformers, openai, anthropic, langchain, sentence-transformers
+- **Visualization**: matplotlib, seaborn, plotly
 
 **Git Standards**:
 - **Commit convention**: Conventional Commits
   ```
   Type: feat, fix, docs, style, refactor, perf, test, chore
-  Scope: data, model, config, trainer, utils, workflow
+  Scope: data, model, analysis, config, utils, workflow
   ```
 - **Branch strategy**: master/develop/feature/bugfix/hotfix/release
 - **Merge strategy**: rebase for feature branch sync, merge --no-ff for integration
@@ -38,9 +53,9 @@
 ## Global Configuration
 
 ### Language Settings
-- **Respond in English to the user**
-- Keep technical terms in English (e.g. NeurIPS, RLHF, TDD, Git)
-- Do not translate proper nouns or names
+- **Respond in Chinese (Simplified) to the user by default**
+- Keep technical terms in English (e.g. ESG, LLM, NLP, API, Git, WRDS, OLS, DiD)
+- Do not translate proper nouns, journal names, or method names
 
 ### Working Directory Standards
 - Plan documents: `/plan` folder
@@ -65,15 +80,15 @@
 ### Research Lifecycle (7 Stages)
 
 ```
-Ideation → ML Development → Experiment Analysis → Paper Writing → Self-Review → Submission/Rebuttal → Post-Acceptance
+Ideation → Data Collection & LLM Processing → Empirical Analysis → Paper Writing → Self-Review → Submission/Rebuttal → Post-Acceptance
 ```
 
 | Stage | Core Tools | Commands |
 |-------|-----------|----------|
 | 1. Research Ideation | `research-ideation` skill + `literature-reviewer` agent + Zotero MCP | `/research-init`, `/zotero-review`, `/zotero-notes` |
-| 2. ML Project Dev | `architecture-design` skill + `code-reviewer` agent | `/plan`, `/commit`, `/tdd` |
-| 3. Experiment Analysis | `results-analysis` skill + `data-analyst` agent | `/analyze-results` |
-| 4. Paper Writing | `ml-paper-writing` skill + `paper-miner` agent | - |
+| 2. LLM-Based Data Processing | `architecture-design` skill + `code-reviewer` agent | `/plan`, `/commit`, `/tdd` |
+| 3. Empirical Analysis | `results-analysis` skill + `data-analyst` agent | `/analyze-results` |
+| 4. Paper Writing | `esg-paper-writing` skill + `paper-miner` agent | - |
 | 5. Self-Review | `paper-self-review` skill | - |
 | 6. Submission & Rebuttal | `review-response` skill + `rebuttal-writer` agent | `/rebuttal` |
 | 7. Post-Acceptance | `post-acceptance` skill | `/presentation`, `/poster`, `/promote` |
@@ -82,42 +97,42 @@ Ideation → ML Development → Experiment Analysis → Paper Writing → Self-R
 
 - **Automation**: 5 Hooks auto-trigger at session lifecycle stages (skill evaluation, env init, work summary, security check)
 - **Zotero Integration**: Automated paper import, collection management, full-text reading, and citation export via Zotero MCP
-- **Knowledge Extraction**: `paper-miner` and `kaggle-miner` agents continuously extract knowledge from papers and competitions
+- **Knowledge Extraction**: `paper-miner` agent continuously extracts writing knowledge from top business/ESG papers
 - **Skill Evolution**: `skill-development` → `skill-quality-reviewer` → `skill-improver` three-step improvement loop
 
 ---
 
-## Skills Directory (32 skills)
+## Skills Directory
 
-### 🔬 Research & Analysis (4 skills)
+### 🔬 Research & Analysis
 
 - **research-ideation**: Research startup (5W1H, literature review, gap analysis, research question formulation, Zotero integration)
-- **results-analysis**: Experiment result analysis (statistical tests, visualization, ablation studies)
+- **results-analysis**: Empirical analysis results (regression tables, significance tests, robustness checks, visualization)
 - **citation-verification**: Citation verification (multi-layer: format→API→info→content)
-- **daily-paper-generator**: Daily paper generator for research tracking
+- **daily-paper-generator**: Daily paper generator for ESG/finance/management research tracking
 
-### 📝 Paper Writing & Publication (7 skills)
+### 📝 Paper Writing & Publication
 
-- **ml-paper-writing**: ML/AI paper writing assistance
-  - Top conferences: NeurIPS, ICML, ICLR, ACL, AAAI, COLM
-  - Journals: Nature, Science, Cell, PNAS
+- **esg-paper-writing**: ESG/business/finance paper writing assistance
+  - Target journals: Journal of Finance, Management Science, Strategic Management Journal, Journal of Business Ethics, Business Strategy and the Environment
+  - Empirical business writing conventions, APA/AMA/Chicago style
 - **writing-anti-ai**: Remove AI writing patterns, bilingual (Chinese/English)
 - **paper-self-review**: Paper self-review (6-item quality checklist)
 - **review-response**: Systematic rebuttal writing
 - **post-acceptance**: Post-acceptance processing (presentation, poster, promotion)
 - **doc-coauthoring**: Document co-authoring workflow
-- **latex-conference-template-organizer**: LaTeX conference template organization
+- **latex-conference-template-organizer**: LaTeX template organization
 
-### 💻 Development Workflows (6 skills)
+### 💻 Development Workflows
 
 - **daily-coding**: Daily coding checklist (minimal mode, auto-triggered)
 - **git-workflow**: Git workflow standards (Conventional Commits, branch management)
 - **code-review-excellence**: Code review best practices
 - **bug-detective**: Debugging and error investigation (Python, Bash/Zsh, JavaScript/TypeScript)
-- **architecture-design**: ML project code architecture and design patterns
+- **architecture-design**: Research project code architecture and design patterns
 - **verification-loop**: Verification loops and testing
 
-### 🔌 Plugin Development (8 skills)
+### 🔌 Plugin Development
 
 - **skill-development**: Skill development guide
 - **skill-improver**: Skill improvement tool
@@ -128,14 +143,13 @@ Ideation → ML Development → Experiment Analysis → Paper Writing → Self-R
 - **hook-development**: Hook development and event handling
 - **mcp-integration**: MCP server integration
 
-### 🧪 Tools & Utilities (4 skills)
+### 🧪 Tools & Utilities
 
 - **planning-with-files**: Planning and progress tracking with Markdown files
 - **uv-package-manager**: uv package manager usage
 - **webapp-testing**: Local web application testing
-- **kaggle-learner**: Kaggle competition learning
 
-### 🎨 Web Design (3 skills)
+### 🎨 Web Design
 
 - **frontend-design**: Create distinctive, production-grade frontend interfaces
 - **ui-ux-pro-max**: UI/UX design intelligence (50+ styles, 97 palettes, 57 font pairings, 9 stacks)
@@ -152,11 +166,11 @@ Ideation → ML Development → Experiment Analysis → Paper Writing → Self-R
 | `/research-init` | Start Zotero-integrated research ideation workflow (auto-create collections, import papers, full-text analysis) |
 | `/zotero-review` | Read papers from Zotero collection, generate structured literature review |
 | `/zotero-notes` | Batch read Zotero papers, generate structured reading notes |
-| `/analyze-results` | Analyze experiment results (statistical tests, visualization, ablation) |
+| `/analyze-results` | Analyze empirical results (regression tables, robustness checks, visualization) |
 | `/rebuttal` | Generate systematic rebuttal document |
-| `/presentation` | Create conference presentation outline |
+| `/presentation` | Create conference/seminar presentation outline |
 | `/poster` | Generate academic poster design |
-| `/promote` | Generate promotion content (Twitter, LinkedIn, blog) |
+| `/promote` | Generate promotion content (Twitter/X, LinkedIn, blog) |
 
 ### Development Workflow Commands
 
@@ -180,7 +194,7 @@ Ideation → ML Development → Experiment Analysis → Paper Writing → Self-R
 ### SuperClaude Command Suite (`/sc`)
 
 - `/sc agent` - Agent dispatch
-- `/sc analyze` - Code analysis
+- `/sc analyze` - Code/data analysis
 - `/sc brainstorm` - Interactive brainstorming
 - `/sc build` - Build project
 - `/sc business-panel` - Business panel
@@ -215,21 +229,20 @@ Ideation → ML Development → Experiment Analysis → Paper Writing → Self-R
 
 ### Research Workflow Agents
 
-- **literature-reviewer** - Literature search, classification, and trend analysis (Zotero MCP integration: auto-import, full-text reading)
-- **data-analyst** - Automated data analysis and visualization
+- **literature-reviewer** - Literature search, classification, and trend analysis for ESG/finance/management (Zotero MCP integration: auto-import, full-text reading)
+- **data-analyst** - Automated empirical data analysis and visualization (panel data, regression, text-as-data)
 - **rebuttal-writer** - Systematic rebuttal writing with tone optimization
-- **paper-miner** - Extract writing knowledge from successful papers
+- **paper-miner** - Extract writing knowledge from successful ESG/business/finance papers
 
 ### Development Workflow Agents
 
-- **architect** - System architecture design
+- **architect** - Research project code architecture design
 - **build-error-resolver** - Build error fixing
 - **bug-analyzer** - Deep code execution flow analysis and root cause investigation
 - **code-reviewer** - Code review
 - **dev-planner** - Development task planning and breakdown
 - **refactor-cleaner** - Code refactoring and cleanup
 - **tdd-guide** - TDD workflow guidance
-- **kaggle-miner** - Extract engineering practices from Kaggle solutions
 
 ### Design & Content Agents
 
@@ -258,10 +271,10 @@ Global constraints, always active:
 
 | Rule File | Purpose |
 |-----------|---------|
-| `coding-style.md` | ML project code standards: 200-400 line files, immutable config, type hints, Factory & Registry patterns |
+| `coding-style.md` | Research project code standards: 200-400 line files, immutable config, type hints |
 | `agents.md` | Agent orchestration: auto-invocation timing, parallel execution, multi-perspective analysis |
 | `security.md` | Security standards: key management, sensitive file protection, pre-commit security checks |
-| `experiment-reproducibility.md` | Experiment reproducibility: random seeds, config recording, environment recording, checkpoint management |
+| `experiment-reproducibility.md` | Analysis reproducibility: random seeds, config recording, environment recording, checkpoint management |
 
 ---
 
@@ -274,28 +287,28 @@ Global constraints, always active:
 
 ### Tags Naming
 - Format: Title Case
-- Abbreviations all caps: TDD, RLHF, NeurIPS, ICLR
-- Example: `[Writing, Research, Academic]`
+- Abbreviations all caps: ESG, LLM, NLP, APA
+- Example: `[Writing, Research, ESG, Academic]`
 
 ### Description Standards
 - Person: third person
 - Content: include purpose and use cases
-- Example: "Provides guidance for academic paper writing, covering top-venue submission requirements"
+- Example: "Provides guidance for ESG academic paper writing, covering top business journal submission requirements"
 
 ---
 
 ## Task Completion Summary
 
-After each task, proactively provide a brief summary:
+After each task, proactively provide a brief summary (in Chinese):
 
 ```
-📋 Operation Review
-1. [Main operation]
-2. [Modified files]
+📋 操作回顾
+1. [主要操作]
+2. [修改的文件]
 
-📊 Current Status
-• [Git/filesystem/runtime status]
+📊 当前状态
+• [Git/文件系统/运行状态]
 
-💡 Next Steps
-1. [Targeted suggestions]
+💡 下一步
+1. [具体建议]
 ```

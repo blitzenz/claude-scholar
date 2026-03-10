@@ -1,31 +1,33 @@
 ---
 name: results-analysis
-description: This skill should be used when the user asks to "analyze experimental results", "generate results section", "statistical analysis of experiments", "compare model performance", "create results visualization", or mentions connecting experimental data to paper writing. Provides comprehensive guidance for analyzing ML/AI experimental results and generating paper-ready content.
-tags: [Research, Analysis, Statistics, Visualization, Paper Writing]
-version: 0.1.0
+description: This skill should be used when the user asks to "analyze empirical results", "generate results section", "run regression analysis", "robustness checks", "create results tables", "panel data analysis", "event study", "difference-in-differences", or mentions connecting empirical data to paper writing for ESG/finance/management research. Also use for validating LLM outputs against human coders, checking Cohen's kappa, or analyzing ESG text classification results.
+tags: [Research, Analysis, Statistics, Visualization, Paper Writing, ESG, Empirical, Regression, Panel Data]
+version: 0.2.0
 ---
 
-# Results Analysis for ML/AI Research
+# Results Analysis for ESG & Business Empirical Research
 
-A systematic experimental results analysis workflow connecting experimental data to paper writing.
+A systematic empirical results analysis workflow connecting quantitative findings to paper writing for business/finance/management journals.
 
 ## Core Features
 
 This skill provides three core capabilities:
 
-1. **Experimental Data Analysis** - Read and analyze experimental data in various formats
-2. **Statistical Validation** - Perform statistical significance tests and performance comparisons
-3. **Paper Content Generation** - Generate text and visualizations for the Results section
+1. **Empirical Data Analysis** - Read and analyze panel data, cross-sectional data, ESG text output data
+2. **Statistical Validation** - Run regression tables, robustness checks, validate LLM outputs vs human coders
+3. **Paper Content Generation** - Generate Results section text, regression tables, and visualizations for top business journals
 
 ## When to Use
 
 Use this skill when you need to:
-- Analyze experimental results (CSV, JSON, TensorBoard logs)
-- Generate the Results section of a paper
-- Compare performance across multiple models
-- Perform statistical significance tests
-- Create publication-quality visualizations
-- Validate the reliability of experimental results
+- Run OLS, panel OLS (with firm/year FE), DiD, event study regressions
+- Generate publication-ready regression tables (with clustered standard errors)
+- Conduct robustness checks (alternative samples, variable definitions, estimators)
+- Validate LLM-generated ESG scores/classifications against manual coding (Cohen's kappa)
+- Analyze ESG text classification results from LLM pipelines
+- Create publication-quality visualizations for business journals
+- Test endogeneity (IV regression, Heckman selection, PSM)
+- Discuss economic magnitude of coefficients
 
 ## Workflow
 
