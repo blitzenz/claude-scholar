@@ -82,7 +82,6 @@
 
 - **自动化执行**: 5 个 Hook 在会话各阶段自动触发（技能评估、环境初始化、工作总结、安全检查）
 - **Zotero 集成**: 通过 Zotero MCP 服务器实现论文自动导入、集合管理、全文阅读和准确引用导出
-- **Obsidian 集成**: 对 Obsidian vault 中的论文/阅读笔记提供 Zotero 同款工作流（folder/tag → 批量阅读 → 结构化笔记 → 综述输出），通过 Obsidian MCP 接入
 - **知识提取**: `paper-miner` 和 `kaggle-miner` agent 持续从论文和竞赛中提取知识
 - **技能进化**: `skill-development` → `skill-quality-reviewer` → `skill-improver` 三步改进循环
 
@@ -153,9 +152,6 @@
 | `/research-init` | 启动 Zotero 集成研究构思工作流（自动建集合、导入论文、全文分析） |
 | `/zotero-review` | 从 Zotero 集合读取论文，生成结构化文献综述 |
 | `/zotero-notes` | 批量阅读 Zotero 论文，生成结构化阅读笔记 |
-| `/obsidian-init` | 在 Obsidian vault 中初始化研究文件夹结构（Zotero 同款） |
-| `/obsidian-review` | 从 Obsidian folder/tag 读取论文笔记，生成结构化文献综述 |
-| `/obsidian-notes` | 批量阅读 Obsidian 论文笔记，生成结构化阅读笔记 |
 | `/analyze-results` | 分析实验结果（统计检验、可视化、消融实验） |
 | `/rebuttal` | 生成系统化 rebuttal 文档 |
 | `/presentation` | 创建会议演讲大纲 |
@@ -215,12 +211,11 @@
 
 ---
 
-## 代理（15 Agents）
+## 代理（14 Agents）
 
 ### 研究工作流代理
 
 - **literature-reviewer** - 文献搜索、分类和趋势分析（Zotero MCP 集成，支持自动导入、全文阅读）
-- **literature-reviewer-obsidian** - 从 Obsidian vault 进行文献综述（folder/tag 选集），生成结构化笔记与综述（Obsidian MCP）
 - **data-analyst** - 自动化数据分析和可视化
 - **rebuttal-writer** - 系统化 rebuttal 写作，语气优化
 - **paper-miner** - 从成功论文中提取写作知识

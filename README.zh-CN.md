@@ -299,9 +299,6 @@ claude-scholar/
 │
 ├── commands/            # 50+ 斜杠命令（快速工作流执行）
 │   ├── research-init.md         # 启动研究启动工作流
-│   ├── obsidian-init.md         # 初始化 Obsidian 研究文件夹结构
-│   ├── obsidian-review.md       # 从 Obsidian 论文笔记生成文献综述
-│   ├── obsidian-notes.md        # 批量阅读 Obsidian 论文笔记并生成阅读笔记
 │   ├── zotero-review.md         # 从 Zotero 读取论文，生成文献综述
 │   ├── zotero-notes.md          # 批量阅读 Zotero 论文，生成阅读笔记
 │   ├── analyze-results.md       # 分析实验结果
@@ -329,9 +326,8 @@ claude-scholar/
 │       ├── sc-improve.md         # 代码改进
 │       └── ...
 │
-├── agents/              # 15 个专业代理（专注任务委托）
+├── agents/              # 14 个专业代理（专注任务委托）
 │   ├── literature-reviewer.md   # 文献搜索和趋势分析
-│   ├── literature-reviewer-obsidian.md  # 从 Obsidian vault 进行文献综述
 │   ├── data-analyst.md          # 自动化数据分析和可视化
 │   ├── rebuttal-writer.md       # 系统化 rebuttal 写作
 │   ├── paper-miner.md           # 提取论文知识：结构、技巧
@@ -543,13 +539,8 @@ cp rules/agents.md ~/.claude/rules/
 - Node.js（钩子依赖，必需）
 - uv、Python（用于 Python 开发）
 - **Zotero**（用于 Zotero MCP 功能）
-- **Obsidian**（可选，用于 Obsidian MCP 功能）
 
 ### MCP 服务配置
-
-完整设置指南和故障排除请参阅 [MCP_SETUP.zh-CN.md](./MCP_SETUP.zh-CN.md)。
-
-#### Zotero MCP（Zotero 集成工作流）
 
 如需使用 Zotero 集成的研究工作流，请安装 MCP 服务器：
 
@@ -578,13 +569,7 @@ uv tool install git+https://github.com/Galaxy-Dawn/zotero-mcp.git
 }
 ```
 
-#### Obsidian MCP（Obsidian vault 工作流）
-
-如果你的文献库都在 Obsidian vault 里，可以配置 Obsidian MCP，并使用：
-
-- `/obsidian-init`
-- `/obsidian-review`
-- `/obsidian-notes`
+详细设置指南和故障排除请参阅 [MCP_SETUP.zh-CN.md](./MCP_SETUP.zh-CN.md)。
 
 ### 首次运行
 

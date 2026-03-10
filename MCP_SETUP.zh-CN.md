@@ -144,169 +144,7 @@ export UNSAFE_OPERATIONS="all"
 | `zotero_find_and_attach_pdfs` | 查找并附加开放获取 PDF |
 | `zotero_add_linked_url_attachment` | 添加链接 URL 附件 |
 
-### 2. Obsidian MCP（Obsidian Vault 工作流）
-
-**使用场景**: `literature-reviewer-obsidian` agent、`/obsidian-review`、`/obsidian-notes` 命令
-
-**安装包**: [cyanheads/obsidian-mcp-server](https://github.com/cyanheads/obsidian-mcp-server) — 通过 [Obsidian Local REST API 插件](https://github.com/coddingtonbear/obsidian-local-rest-api) 接入 Obsidian vault。
-
-#### 功能
-
-| 类别 | 工具 |
-|------|------|
-| **读写** | `obsidian_read_note`, `obsidian_update_note`, `obsidian_delete_note` |
-| **搜索** | `obsidian_global_search`, `obsidian_search_replace` |
-| **组织/元数据** | `obsidian_list_notes`, `obsidian_manage_frontmatter`, `obsidian_manage_tags` |
-
-#### 前置条件
-
-1. 安装 [Obsidian](https://obsidian.md/)
-2. 安装并启用社区插件 **Local REST API**（Obsidian → Settings → Community plugins）
-3. 在插件设置中生成/复制 API key
-4. 推荐使用非加密 HTTP `http://127.0.0.1:27123`（避免 SSL 问题）。如必须使用 HTTPS（`https://127.0.0.1:27124`），可能需要关闭 SSL 校验。
-
-#### 安装
-
-无需安装（推荐）：使用 `npx` 直接运行。
-
-#### 配置
-
-选择您的平台：
-
-##### Claude Code
-
-Claude Code v2.1.5+：在 `~/.claude.json` 的 `mcpServers` 中添加。
-
-更早版本：在 `~/.claude/settings.json` 的 `mcpServers` 中添加：
-
-```json
-{
-  "mcpServers": {
-    "obsidian": {
-      "command": "npx",
-      "args": ["obsidian-mcp-server"],
-      "env": {
-        "OBSIDIAN_API_KEY": "your-api-key",
-        "OBSIDIAN_BASE_URL": "http://127.0.0.1:27123"
-      }
-    }
-  }
-}
-```
-
-如必须使用 HTTPS：
-
-```json
-{
-  "mcpServers": {
-    "obsidian": {
-      "command": "npx",
-      "args": ["obsidian-mcp-server"],
-      "env": {
-        "OBSIDIAN_API_KEY": "your-api-key",
-        "OBSIDIAN_BASE_URL": "https://127.0.0.1:27124",
-        "OBSIDIAN_VERIFY_SSL": "false"
-      }
-    }
-  }
-}
-```
-
-##### Codex CLI
-
-在 `~/.codex/config.toml` 中添加：
-
-```toml
-[mcp_servers.obsidian]
-command = "npx"
-args = ["obsidian-mcp-server"]
-enabled = true
-
-[mcp_servers.obsidian.env]
-OBSIDIAN_API_KEY = "your-api-key"
-OBSIDIAN_BASE_URL = "http://127.0.0.1:27123"
-# OBSIDIAN_VERIFY_SSL = "false" # 仅在使用 https://127.0.0.1:27124 时需要
-```
-
-##### OpenCode
-
-在 `~/.opencode/opencode.jsonc` 中添加：
-
-```jsonc
-{
-  "mcp": {
-    "obsidian": {
-      "type": "local",
-      "command": ["npx", "obsidian-mcp-server"],
-      "enabled": true
-    }
-  }
-}
-```
-
-然后在 `~/.zshrc` 中设置环境变量：
-
-```bash
-# Obsidian MCP
-export OBSIDIAN_API_KEY="your-api-key"
-export OBSIDIAN_BASE_URL="http://127.0.0.1:27123"
-```
-
-#### 环境变量
-
-| 变量 | 必需 | 说明 |
-|------|------|------|
-| `OBSIDIAN_API_KEY` | 是 | Obsidian Local REST API 插件生成的 API key |
-| `OBSIDIAN_BASE_URL` | 是 | 插件 Base URL（推荐：`http://127.0.0.1:27123`） |
-| `OBSIDIAN_VERIFY_SSL` | 否 | 使用 HTTPS 且为自签证书时可设置为 `false` |
-
-#### 可用工具
-
-| 工具 | 功能 |
-|------|------|
-| `obsidian_list_notes` | 列出目录下的笔记与子目录 |
-| `obsidian_read_note` | 读取笔记内容与元信息 |
-| `obsidian_update_note` | 追加/前置/覆盖写入（可创建文件） |
-| `obsidian_global_search` | 全库搜索 |
-| `obsidian_search_replace` | 笔记内搜索替换 |
-| `obsidian_manage_frontmatter` | 读取/设置/删除 YAML frontmatter 键 |
-| `obsidian_manage_tags` | 添加/移除/列出笔记标签 |
-| `obsidian_delete_note` | 永久删除笔记 |
-
-#### Obsidian URI（可选）
-
-Obsidian 支持 `obsidian://` URI scheme（open/search/new 等），便于一键跳转。
-
-示例：
-
-- `obsidian://open?vault=my%20vault&file=Research%2FMyPaper`
-- `obsidian://search?vault=my%20vault&query=%23to-read`
-
-详见：Obsidian Help → "Obsidian URI"（包含 URL 编码规则）。
-
-#### 备选 MCP Server（filesystem fallback）
-
-如果你不想依赖 REST 插件（或需要目录操作），可以尝试 [newtype-01/obsidian-mcp](https://github.com/newtype-01/obsidian-mcp)（`@huangyihe/obsidian-mcp`）。
-
-```json
-{
-  "mcpServers": {
-    "obsidian": {
-      "command": "npx",
-      "args": ["@huangyihe/obsidian-mcp"],
-      "env": {
-        "OBSIDIAN_VAULT_PATH": "/path/to/your/vault",
-        "OBSIDIAN_API_TOKEN": "your_api_token",
-        "OBSIDIAN_API_PORT": "27123"
-      }
-    }
-  }
-}
-```
-
-注意：工具名不同（例如 `list_notes`, `read_note`, `update_note`），需要相应调整 prompts/commands。
-
-### 3. 浏览器自动化 MCP（可选）
+### 2. 浏览器自动化 MCP（可选）
 
 用途: Chrome 浏览器控制、网页交互。
 
@@ -328,14 +166,11 @@ Obsidian 支持 `obsidian://` URI scheme（open/search/new 等），便于一键
 配置完成后，重启您的 CLI 并验证 MCP 服务是否连接：
 
 ```
-# Zotero 示例：
+# 在您的 CLI 中尝试调用 Zotero 工具：
 > 列出我的 Zotero 集合
-
-# Obsidian 示例：
-> 列出 "Research-XYZ-2026-03/Core Papers" 目录下的笔记
 ```
 
-如果工具返回了数据（集合/笔记列表），说明配置成功。
+如果工具返回了您的集合列表，说明配置成功。
 
 ## 常见问题
 
@@ -345,7 +180,4 @@ Obsidian 支持 `obsidian://` URI scheme（open/search/new 等），便于一键
 | PDF 附加失败 | 确保已设置 `UNPAYWALL_EMAIL` |
 | 删除操作被阻止 | 设置 `UNSAFE_OPERATIONS=items` 或 `all` |
 | HTTP 错误 | 检查 `NO_PROXY` 是否包含 localhost |
-| Obsidian 401/403 | 检查 `OBSIDIAN_API_KEY`（插件 key），并重启 Obsidian |
-| Obsidian 连接被拒绝 | 确认 Obsidian 正在运行，`OBSIDIAN_BASE_URL` 是否正确 |
-| Obsidian SSL 报错 | 优先使用 `http://127.0.0.1:27123`，或在 HTTPS 下设置 `OBSIDIAN_VERIFY_SSL=false` |
 | API 速率限制 (429) | 每批 ≤10 篇论文，批次间添加延迟 |
