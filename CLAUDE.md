@@ -80,28 +80,166 @@
 
 ## Core Workflows
 
-### Research Lifecycle (7 Stages)
+### Research Lifecycle (12 Stages)
+
+Expanded from 7 to 12 stages, incorporating multi-perspective debate, pilot validation, visual planning, and quality gate mechanisms (inspired by Sibyl Research System's dual-loop architecture).
 
 ```
-Ideation → Data Collection & LLM Processing → Empirical Analysis → Paper Writing → Self-Review → Submission/Rebuttal → Post-Acceptance
+1. Topic Scoping
+   → 2. Literature Search & Zotero Import
+   → 3. Multi-Perspective Idea Debate
+   → 4. Research Design & Planning
+   → 5. Pilot Validation (small sample)
+   → 6. Full Data Collection & LLM Processing
+   → 7. Empirical Analysis & Robustness
+   → 8. Result Assessment (multi-angle)
+   → 9. Visual Planning & Paper Outline
+   → 10. Paper Writing (parallel sections)
+   → 11. Quality Gate & Self-Review
+   → 12. Submission / Rebuttal / Post-Acceptance
 ```
 
-| Stage | Core Tools | Commands |
-|-------|-----------|----------|
-| 1. Research Ideation | `research-ideation` skill + `literature-reviewer` agent + Zotero MCP | `/research-init`, `/zotero-review`, `/zotero-notes` |
-| 2. LLM-Based Data Processing | `architecture-design` skill + `code-reviewer` agent | `/plan`, `/commit`, `/tdd` |
-| 3. Empirical Analysis | `results-analysis` skill + `data-analyst` agent | `/analyze-results` |
-| 4. Paper Writing | `esg-paper-writing` skill + `paper-miner` agent | - |
-| 5. Self-Review | `paper-self-review` skill | - |
-| 6. Submission & Rebuttal | `review-response` skill + `rebuttal-writer` agent | `/rebuttal` |
-| 7. Post-Acceptance | `post-acceptance` skill | `/presentation`, `/poster`, `/promote` |
+### Stage Details
 
-### Supporting Workflows
+**Stage 1: Topic Scoping**
+- 5W1H framework: What phenomenon? Why important? Who are stakeholders? When (time scope)? Where (geography/industry)? How (preliminary method)?
+- User provides a rough direction; Claude structures it into a researchable question
+- Output: `plan/topic-scoping.md`
 
-- **Automation**: 5 Hooks auto-trigger at session lifecycle stages (skill evaluation, env init, work summary, security check)
-- **Zotero Integration**: Automated paper import, collection management, full-text reading, and citation export via Zotero MCP
-- **Knowledge Extraction**: `paper-miner` agent continuously extracts writing knowledge from top business/ESG papers
-- **Skill Evolution**: `skill-development` → `skill-quality-reviewer` → `skill-improver` three-step improvement loop
+**Stage 2: Literature Search & Zotero Import**
+- WebSearch across Google Scholar, SSRN, OpenAlex for ABS 3★+ papers
+- Extract DOIs → batch import to Zotero via API → auto-create themed collections (Core Papers / Methods / Applications / To-Read)
+- Attach Open Access PDFs via Unpaywall; record paywalled papers for user to download via school access
+- Full-text analysis for core papers; extract: research question, method, data, findings, limitations
+- Gap analysis: identify 2-3 concrete research opportunities
+- Output: `context/literature-review.md`, `context/gap-analysis.md`, `references.bib`
+
+**Stage 3: Multi-Perspective Idea Debate** *(from Sibyl)*
+- Evaluate the proposed idea from 4 perspectives (adapted from Sibyl's 6-agent debate for business research):
+  - **Innovator**: What's novel about this? Cross-domain analogies? New measurement approaches?
+  - **Skeptic**: What could go wrong? Endogeneity concerns? Data limitations? Identification challenges?
+  - **Pragmatist**: Is this feasible with available data/methods? Timeline realistic? Sample size sufficient?
+  - **Theorist**: What's the theoretical mechanism? Which theory anchors this? Are hypotheses well-grounded?
+- Synthesize perspectives into a refined proposal with clear contribution statement
+- Output: `idea/perspectives/`, `idea/proposal.md`, `idea/hypotheses.md`
+
+**Stage 4: Research Design & Planning**
+- Define variables: dependent, independent, controls (with sources: WRDS, CSMAR, Bloomberg, etc.)
+- Specify empirical model (OLS, panel FE, DiD, IV, PSM)
+- Plan endogeneity strategy
+- If using LLM for text analysis: design prompt, plan human validation (Cohen's kappa target ≥ 0.7)
+- Plan all tables and figures upfront (regression tables, descriptive stats, robustness checks, mechanism tests)
+- Output: `plan/methodology.md`, `plan/variable-definitions.md`, `plan/visual-plan.md`
+
+**Stage 5: Pilot Validation** *(from Sibyl)*
+- Before full-scale analysis, test on a small sample (~100-500 firms, 1-2 years):
+  - Does the LLM prompt produce sensible ESG scores/classifications?
+  - Does the main regression show the expected sign?
+  - Are there obvious data quality issues?
+- GO/NO-GO decision: if pilot shows promise → proceed; if not → revise approach or pivot
+- Output: `exp/pilot-results.md`
+
+**Stage 6: Full Data Collection & LLM Processing**
+- Run LLM pipeline on full dataset (batch processing with error handling)
+- Record all prompts in appendix-ready format
+- Validate LLM outputs: inter-coder reliability, prompt sensitivity analysis, model robustness (GPT-4 vs Claude)
+- Output: processed dataset, `data/llm-validation.md`
+
+**Stage 7: Empirical Analysis & Robustness**
+- Main regression with clustered standard errors
+- At least 3 robustness checks: alternative variable definitions, sub-samples, alternative estimators
+- Endogeneity tests: IV regression / DiD / PSM / Oster (2019) coefficient stability
+- Mechanism tests (mediation analysis)
+- Cross-sectional heterogeneity analysis
+- Economic magnitude discussion
+- Output: `exp/results/`, regression tables, figures
+
+**Stage 8: Result Assessment (Multi-Angle)** *(from Sibyl)*
+- Assess results from multiple perspectives before writing:
+  - **Optimist**: What are the strengths? What extensions are possible?
+  - **Skeptic**: Are there statistical concerns? Missing robustness checks? Alternative explanations?
+  - **Strategist**: Which results go in the main paper vs appendix? What's the narrative?
+- PROCEED (write paper) or PIVOT (try alternative approach from Stage 3 alternatives)
+- Output: `idea/result-assessment.md`
+
+**Stage 9: Visual Planning & Paper Outline** *(from Sibyl)*
+- Design paper outline with **explicit Figure & Table Plan** before writing any section:
+  - Table 1: Descriptive statistics
+  - Table 2: Main regression results
+  - Table 3-5: Robustness checks
+  - Table 6: Mechanism tests
+  - Figure 1: Research framework diagram
+  - Figure 2: Key trend visualization
+- Each visual element has: description, data source, generation method, target section
+- Output: `writing/outline.md` (with visual plan), `writing/figures/`
+
+**Stage 10: Paper Writing (Parallel Sections)**
+- Write sections referencing the outline and visual plan:
+  - Introduction (hook → RQ → what we do → findings → contributions)
+  - Literature Review & Hypotheses (theory → 3 streams → hypotheses)
+  - Data & Methodology (data sources → sample → LLM method → variables → model)
+  - Results (main → robustness → endogeneity → mechanisms → heterogeneity)
+  - Conclusion (summary → implications → limitations → future)
+- Each section cross-references planned figures/tables
+- Output: `writing/sections/`, `writing/paper.md`
+
+**Stage 11: Quality Gate & Self-Review** *(from Sibyl)*
+- Score the paper on 6 dimensions (1-10 each):
+  1. **Contribution clarity**: Is the "so what" compelling?
+  2. **Empirical rigor**: Endogeneity addressed? Robustness sufficient?
+  3. **LLM methodology**: Validated against human coders? Prompt disclosed?
+  4. **Writing quality**: Clear, concise, logical flow?
+  5. **Journal fit**: Matches target journal norms and recent publications?
+  6. **Citation completeness**: All claims supported? Key papers cited?
+- If average < 7/10 → identify weakest dimension → iterate on that section
+- If average ≥ 7/10 → ready for submission
+- Anti-AI check: remove AI writing patterns (e.g., "it's important to note", "delve into")
+- Output: `writing/quality-review.md`, `writing/improvement-plan.md`
+
+**Stage 12: Submission / Rebuttal / Post-Acceptance**
+- Format paper for target journal (LaTeX or Word template)
+- Generate cover letter
+- After reviews: systematic rebuttal writing (point-by-point response with evidence)
+- After acceptance: presentation slides, poster, promotion content
+- Output: final submission package
+
+### Zotero Integration
+
+- **API Key**: configured (Library ID: 19903524)
+- **Capabilities**: DOI-based import, collection management, PDF attachment (Open Access via Unpaywall), full-text reading, BibTeX export
+- **Paywalled papers**: User logs into school account via Chrome → Claude operates browser to search and download
+
+### File Structure Convention
+
+```
+{project}/
+├── plan/
+│   ├── topic-scoping.md
+│   ├── methodology.md
+│   ├── variable-definitions.md
+│   └── visual-plan.md
+├── context/
+│   ├── literature-review.md
+│   └── gap-analysis.md
+├── idea/
+│   ├── perspectives/          # Multi-perspective debate outputs
+│   ├── proposal.md            # Refined research proposal
+│   ├── hypotheses.md          # Testable hypotheses
+│   └── result-assessment.md   # Post-analysis assessment
+├── data/
+│   └── llm-validation.md      # LLM output validation report
+├── exp/
+│   ├── pilot-results.md
+│   └── results/               # Full regression outputs
+├── writing/
+│   ├── outline.md             # Paper outline WITH visual plan
+│   ├── sections/              # Individual section drafts
+│   ├── figures/               # Figure generation scripts & outputs
+│   ├── paper.md               # Integrated draft
+│   ├── quality-review.md      # Quality gate scoring
+│   └── improvement-plan.md    # Iteration improvements
+└── references.bib
+```
 
 ---
 
